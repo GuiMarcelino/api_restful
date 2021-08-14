@@ -67,20 +67,17 @@ class BancoDeDados(Resource):
 
     def post(self):
         args = parser.parse_args()
-        if args == ['id']:
-            db = conexao()
-            produto = update(db, args['id'])
-            resultado = converte_produto_to_dict(
-                    Produto(
-                        nome=produto[0],
-                        descricao=produto[1],
-                        marca=produto[2],
-                        preco=float(produto[3]),
-                        cor=produto[4],
-                        id=produto[0]
-                    )
-            )
-            return jsonify(resultado)
+        if args['id']:
+            produto = Produto(args['nome'],
+                args['descricao'],
+                args['marca'],
+                args['preco'],
+                args['cor'],
+                args['id'])
+
+            db = conexao()        
+            update(db, produto)
+            return "Alterado com sucesso!!"
 
         else:
             args = parser.parse_args()
