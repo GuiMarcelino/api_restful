@@ -43,13 +43,11 @@ class BancoDeDados(Resource):
             )
         return jsonify(lista_produtos)
 
-
     def delete(self):
         args = parser.parse_args()
         db = conexao()
         delete(db, args['id'])
         return 'Produto Deletado com sucesso!!!'
-
 
     def post(self):
         args = parser.parse_args()
