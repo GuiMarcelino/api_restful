@@ -24,24 +24,40 @@ def converte_produto_to_dict(produto):
 
 
 class BancoDeDados(Resource):
-    def get(self):
-        db = conexao()        
-        resultado = select(db)
-        lista_produtos = []
-        for index in resultado:
-            lista_produtos.append(
-                converte_produto_to_dict(
+    def get(self, id=None):       
+        if id:
+            db = conexao()
+            produto = select_id(db, id)
+            resultado = converte_produto_to_dict(
                     Produto(
-                        id=index[0],
-                        nome=index[1],
-                        descricao=index[2],
-                        marca=index[3],
-                        preco=float(index[4]),
-                        cor=index[5]
+                        id=produto[0],
+                        nome=produto[1],
+                        descricao=produto[2],
+                        marca=produto[3],
+                        preco=float(produto[4]),
+                        cor=produto[5]
+                    ))
+            return jsonify(resultado)
+                        
+
+        else:
+            db = conexao()        
+            resultado = select(db)
+            lista_produtos = []
+            for index in resultado:
+                lista_produtos.append(
+                    converte_produto_to_dict(
+                        Produto(
+                            id=index[0],
+                            nome=index[1],
+                            descricao=index[2],
+                            marca=index[3],
+                            preco=float(index[4]),
+                            cor=index[5]
+                        )
                     )
                 )
-            )
-        return jsonify(lista_produtos)
+            return jsonify(lista_produtos)
 
     def delete(self):
         args = parser.parse_args()
@@ -51,16 +67,34 @@ class BancoDeDados(Resource):
 
     def post(self):
         args = parser.parse_args()
-        produto = Produto(args['nome'],
-                args['descricao'],
-                args['marca'],
-                args['preco'],
-                args['cor'])
-        db = conexao()
-        insert(db, produto)
-        return "inserido com sucesso"
+        if args == ['id']:
+            db = conexao()
+            produto = update(db, args['id'])
+            resultado = converte_produto_to_dict(
+                    Produto(
+                        nome=produto[0],
+                        descricao=produto[1],
+                        marca=produto[2],
+                        preco=float(produto[3]),
+                        cor=produto[4],
+                        id=produto[0]
+                    )
+            )
+            return jsonify(resultado)
 
-api.add_resource(BancoDeDados, '/')
+        else:
+            args = parser.parse_args()
+            produto = Produto(args['nome'],
+                    args['descricao'],
+                    args['marca'],
+                    args['preco'],
+                    args['cor'])
+            db = conexao()
+            insert(db, produto)
+            return "inserido com sucesso"
+
+
+api.add_resource(BancoDeDados, '/', '/<int:id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
