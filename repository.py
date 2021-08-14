@@ -4,14 +4,14 @@ import mysql.connector
 def conexao():
     db = mysql.connector.connect(
         host='localhost',
-        database='DADOS',
+        database='CADASTRO_PRODUTOS',
         user='root',
         password='Gui281209'
     )
     return db
 
 def select(db):
-    comando_sql = 'SELECT * FROM INFORMACOES'
+    comando_sql = 'SELECT * FROM PRODUTOS'
     try:
         cursor = db.cursor()
         cursor.execute(comando_sql)
