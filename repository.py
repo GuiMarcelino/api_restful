@@ -22,7 +22,7 @@ def select(db):
         print('não foi possivel visualizar os produtos')
 
 def select_id(db, id_registro):
-    comando_sql = f'SELECT * FROM INFORMACOES WHERE id = {id_registro}'
+    comando_sql = f'SELECT * FROM PRODUTOS WHERE id = {id_registro}'
     try:
         cursor = db.cursor()
         cursor.execute(comando_sql)
@@ -43,7 +43,7 @@ def delete(db, id_registro):
         print(error)
 
 def insert(db,produto):
-    comando_sql = 'INSERT INTO INFORMACOES (NOME, DESCRICAO, MARCA, PRECO, COR) VALUES (%s, %s, %s, %s, %s)'
+    comando_sql = 'INSERT INTO PRODUTOS (NOME, DESCRICAO, MARCA, PRECO, COR) VALUES (%s, %s, %s, %s, %s)'
     parametros = (produto.nome_produto, produto.descricao, produto.marca, produto.preco, produto.cor)
     try:
         cursor = db.cursor()
@@ -55,7 +55,7 @@ def insert(db,produto):
         print(error)
 
 def update(db, produto):
-    comando_sql = "UPDATE INFORMACOES SET NOME = %s, DESCRICAO = %s, MARCA = %s, PRECO = %s, COR = %s WHERE ID = %s"
+    comando_sql = "UPDATE PRODUTOS SET NOME = %s, DESCRICAO = %s, MARCA = %s, PRECO = %s, COR = %s WHERE ID = %s"
     parametros = (produto.nome_produto,
                   produto.descricao,
                   produto.marca,
