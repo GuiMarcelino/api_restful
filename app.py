@@ -53,10 +53,14 @@ class BancoDeDados(Resource):
 
     def post(self):
         args = parser.parse_args()
+        produto = Produto(args['nome'],
+                args['descricao'],
+                args['marca'],
+                args['preco'],
+                args['cor'])
         db = conexao()
-        insert(db, args['nome', 'descricao', 'marca', 'preco', 'cor'])
-        return 'Produto Cadastrado com sucesso!!!'
-
+        insert(db, produto)
+        return "inserido com sucesso"
 
 api.add_resource(BancoDeDados, '/')
 
