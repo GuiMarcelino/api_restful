@@ -9,11 +9,11 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('id', type=int)
-parser.add_argument('nome', type=int)
-parser.add_argument('descricao', type=int)
-parser.add_argument('marca', type=int)
-parser.add_argument('preco', type=int)
-parser.add_argument('cor', type=int)
+parser.add_argument('nome', type=str)
+parser.add_argument('descricao', type=str)
+parser.add_argument('marca', type=str)
+parser.add_argument('preco', type=str)
+parser.add_argument('cor', type=str)
 
 def converte_produto_to_dict(produto):
     produto_dict = {}
@@ -49,10 +49,6 @@ class BancoDeDados(Resource):
         db = conexao()
         delete(db, args['id'])
         return 'Deletado com sucesso!!!'
-
-
-
-
 
 
 api.add_resource(BancoDeDados, '/')
