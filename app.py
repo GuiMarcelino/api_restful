@@ -7,6 +7,12 @@ from product import Produto
 app = Flask(__name__)
 api = Api(app)
 
+parser = reqparse.RequestParser()
+parser.add_argument('id', type=int)
+parser.add_argument('id', type=int)
+parser.add_argument('id', type=int)
+parser.add_argument('id', type=int)
+parser.add_argument('id', type=int)
 
 def converte_produto_to_dict(produto):
     produto_dict = {}
@@ -37,11 +43,11 @@ class BancoDeDados(Resource):
         return jsonify(lista_produtos)
 
 
-    def delete():
-    id = int(request.args['id'])
-    db = conexao()
-    delete(db, id)
-    return 
+    def delete(self):
+        args = parser.parse_args()
+        db = conexao()
+        delete(db, args['id'])
+        return 'Deletado com sucesso!!!'
 
 
 

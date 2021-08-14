@@ -33,7 +33,7 @@ def select_id(db, id_registro):
         print('não foi possível selecionar o produto')
 
 def delete(db, id_registro):
-    comando_sql = f'DELETE FROM INFORMACOES WHERE ID = {id_registro}'
+    comando_sql = f'DELETE FROM PRODUTOS WHERE ID = {id_registro}'
     try:
         cursor = db.cursor()
         cursor.execute(comando_sql)
