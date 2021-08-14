@@ -12,7 +12,7 @@ parser.add_argument('id', type=int)
 parser.add_argument('nome', type=str)
 parser.add_argument('descricao', type=str)
 parser.add_argument('marca', type=str)
-parser.add_argument('preco', type=str)
+parser.add_argument('preco', type=float)
 parser.add_argument('cor', type=str)
 
 def converte_produto_to_dict(produto):
@@ -48,7 +48,14 @@ class BancoDeDados(Resource):
         args = parser.parse_args()
         db = conexao()
         delete(db, args['id'])
-        return 'Deletado com sucesso!!!'
+        return 'Produto Deletado com sucesso!!!'
+
+
+    def post(self):
+        args = parser.parse_args()
+        db = conexao()
+        insert(db, args['nome', 'descricao', 'marca', 'preco', 'cor'])
+        return 'Produto Cadastrado com sucesso!!!'
 
 
 api.add_resource(BancoDeDados, '/')
